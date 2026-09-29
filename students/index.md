@@ -91,9 +91,9 @@ This section contains links to many of the important documents used in the Data 
 
 Your weekly deliverables live in GitHub. There is no document to upload.
 
-**Weekly tasks** are GitHub issues that you open after each mentor session, with clear acceptance criteria for each task. The format and the rules for carrying unfinished tasks over are in the [weekly tasks template](../templates/weekly-tasks.md).
+**Weekly Tasks** are GitHub issues that you open after each mentor session, with clear acceptance criteria for each task. The format and the rules for carrying unfinished tasks over are in the [weekly tasks template](../templates/weekly-tasks.md). To submit your Weekly Tasks to your mentor, post links to these issues in the "Weekly Tasks - Week #" Slack thread for the current week.
 
-**The weekly report** is a comment you post on those same issues before your next mentor session, marking each piece of acceptance criteria as `complete`, `pending review`, `pending changes`, `in progress`, or `no progress shared`, with a short explanation. The format is in the [weekly report template](../templates/weekly-report.md).
+**The Weekly Report** is comments you post on those same issues before your next mentor session, marking each piece of acceptance criteria as `complete`, `pending review`, `pending changes`, `in progress`, or `no progress shared`, with a short explanation. The format is in the [weekly report template](../templates/weekly-report.md). To submit your Weekly Report to your mentor, post links to these issue comments in the "Weekly Report - Week #" Slack thread for the current week.
 
 Each is graded separately on a 0-5 scale every week by your mentor. See the [weekly tasks rubric](../rubrics/weekly-tasks-rubric.md) and the [weekly report rubric](../rubrics/weekly-report-rubric.md).
 
