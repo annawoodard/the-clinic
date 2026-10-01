@@ -75,6 +75,8 @@ Last login: Fri Sep 13 15:06:37 2024 from 10.150.1.240
 (base) nickross@fe01:~$
 ```
 
+The login node name can change between connections. If an existing connection fails, [update your SSH configuration](#step-4-cluster-save-ssh-configuration) to use `login.ds.uchicago.edu`.
+
 The above is also how we demonstrate access to the required resources. If you already have access to the resources that are required you do not need to complete this document.
 
 ## Part 1: SSH Background & Prerequisites
@@ -212,17 +214,20 @@ The .ssh directory used on your normal Windows system and your WSL will be diffe
 
 ### Step 4: [CLUSTER] Save SSH Configuration
 
-We have now created an ssh key file that will allow us to login to the cluster. However, to login we will need to provide the path to key file as well as the username each time we want to login (something like `ssh -i PATH_TO_KEY USERNAME@fe01.ds.uchicago.edu`) which is annoying and error-prone. We will use a config file, in our `.ssh` directory to simplify this process. Instead we will be able to login using just `ssh fe.ds` after completing this process.
+We have now created an ssh key file that will allow us to login to the cluster. However, to login we will need to provide the path to key file as well as the username each time we want to login (something like `ssh -i PATH_TO_KEY USERNAME@login.ds.uchicago.edu`) which is annoying and error-prone. We will use a config file, in our `.ssh` directory to simplify this process. Instead we will be able to login using just `ssh fe.ds` after completing this process.
+
+If you already have a cluster entry, update its `HostName` to `login.ds.uchicago.edu` and keep your existing username and key path. The `Host` name is a local nickname, so `fe.ds` still works. See the [login node policy](https://cluster-policy.ds.uchicago.edu/using-the-cluster/login-nodes/).
 
 1. Create / modify your SSH config file. To open:
     - [Windows] In command prompt: `code C:\Users\USERNAME\.ssh\config` where `USERNAME` is your windows username. 
     - [Mac] In a terminal: `touch ~/.ssh/config` to create the file if it does not exist and `open ~/.ssh/config` to open it.
-2. You may or may not already have configurations saved. Place the text below in the config file, after any other configurations, *except* any block that starts with `Host *` or `Host fe01.ds.uchicago.edu`. If you have a block that has the host information then you probably already had access to the cluster and will need to redo it based on the new keys you created.  
+2. You may or may not already have configurations saved. Update an existing cluster entry, or add the text below before any `Host *` block. Avoid adding a second entry for the same host.
+
 [Mac/Linux]:
 
 ```
 Host fe.ds*
-  HostName fe01.ds.uchicago.edu
+  HostName login.ds.uchicago.edu
   IdentityFile PATH_TO_PRIVATE_KEY
   ForwardAgent yes
   User YOUR_CNET
@@ -239,7 +244,7 @@ Host *.ds !fe.ds
 
 ```
 Host fe.ds*
-  HostName fe01.ds.uchicago.edu
+  HostName login.ds.uchicago.edu
   IdentityFile PATH_TO_PRIVATE_KEY
   ForwardAgent yes
   User YOUR_CNET
@@ -257,6 +262,8 @@ Host *.ds !fe.ds
 Replace `YOUR_CNET` with your CNET ID and `PATH_TO_PRIVATE_KEY` with the path the key you previously created. [Windows: `PATH_TO_PRIVATE_KEY` will be `/Users/USERNAME/.ssh/KEYNAME` where `USERNAME` is your windows username and `KEYNAME` is the name of the key you created. Starting with the root directory `/` is not standard for windows and will not typically work in other situations.] This will map `fe.ds` to an ssh command to the listed hostname, with the listed user and private key, and using the listed identity file as your key. `ForwardAgent` set to yes means that any ssh keys added to your local agent will also be added to the remote machines ssh agent (so you can use your local ssh key for GitHub on the cluster, for example). The second block is for connecting directly to compute nodes.
 
 3. Save and close the file.
+
+Each connection can reach a different login node. Your home directory is shared, but `tmux` and `screen` sessions stay on the node where they started. They do not move running programs between nodes. Use compute nodes for long-running work.
 
 ### Step 5: Enable Authentication with SSH Keys
 
@@ -280,7 +287,7 @@ For a private key to work for authenticating, the service you are authenticating
 
 #### [CLUSTER] Mac/Linux Instructions for Remote Authentication 
 1. If on Mac/Linux, you can use `ssh-copy-id -i ~/.ssh/KEYNAME_HERE.pub fe.ds`, replacing `KEYNAME_HERE` with the name of the public ssh key you would like to use (it should end with .pub). 
-2. You will be prompted for `USERNAME@fe01.ds.uchicago.edu`'s password. This will be your CNET password. 
+2. You will be prompted for `USERNAME@login.ds.uchicago.edu`'s password. This will be your CNET password.
 3. To verify success: In your terminal, `ssh fe.ds` should connect you to the cluster without typing any password.
 
 #### [CLUSTER] Windows Instructions for Remote Authentication
