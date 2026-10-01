@@ -130,17 +130,20 @@ If you need to access the cluster then you will need to request an account (whic
 
 Note that as part of these instructions you will add your SSH key to github. This is a required part of this process.
 
+The cluster now uses `login.ds.uchicago.edu` to route each connection to the least-loaded login node. Direct SSH to individual login nodes is retired. If you already have a `Host fe.ds` entry in your local `~/.ssh/config`, change its `HostName` to `login.ds.uchicago.edu`. You can keep the `fe.ds` nickname. See the [login node policy](https://cluster-policy.ds.uchicago.edu/using-the-cluster/login-nodes/).
+
 **Verification:** Open your terminal and type in the following command:
 
     ssh fe.ds
 
-If you have set this up correctly you should be connected to the AI cluster and see something like `CNET@fe01:~$`. After this, verify you set up ssh keys correctly:
+If you have set this up correctly you should be connected to the AI cluster and see something like `CNET@fe01:~$`. The node name can change between connections; this is expected. After this, verify you set up ssh keys correctly:
 
     ssh-add -l
     ssh -T git@github.com
 
 These commands should return something like `256 SHA256:sdlfjkwljflsdfkjs;flkjs;lfj user@host (ED25519)` and `Hi USERNAME! You've successfully authenticated ...`
 
+Login nodes are limited to 1 CPU and 8 GB RAM per user, and 12 hours per process. Use compute nodes for computation, code agents, and remote IDE backends through [interactive sessions](https://cluster-policy.ds.uchicago.edu/using-the-cluster/interactive-sessions/) or [batch jobs](https://cluster-policy.ds.uchicago.edu/using-the-cluster/batch-jobs/).
 
 After this, to verify that you have access to the cluster, type in the following at that prompt:
 
